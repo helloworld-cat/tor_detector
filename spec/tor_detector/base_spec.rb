@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'net/http'
 
 describe TorDetector::Base do
   describe '#initialize' do
@@ -10,18 +11,32 @@ describe TorDetector::Base do
   end
 
   describe '#call' do
+    let(:tor_detector_instance) { TorDetector::Base.new }
+
     context 'with malformed IP' do
       let(:ip) { 'foobar' }
-      let(:tor_detector_instance) { TorDetector::Base.new }
       subject { tor_detector_instance.call(ip) }
       it { expect { subject }.to raise_error(TorDetector::MalformedIP) }
     end
 
     context 'with not TOR IP' do
       let(:ip) { '1.2.3.4' }
-      let(:tor_detector_instance) { TorDetector::Base.new }
       subject { tor_detector_instance.call(ip) }
       it { expect(subject).to eq(false) }
+    end
+
+    context 'with TOR IP' do
+      let(:tor_exit_nodes) do
+        uri = URI.parse('https://check.torproject.org/exit-addresses')
+        resp = Net::HTTP.get(uri)
+        resp.split("\n")
+            .select{|i| i =~ /^ExitAddress/}
+            .map{|j| j.split(' ')[1]}
+      end
+      let(:ip) { tor_exit_nodes.sample }
+
+      subject { tor_detector_instance.call(ip) }
+      it { expect(subject).to eq(true) }
     end
   end
 end
