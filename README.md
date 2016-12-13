@@ -1,6 +1,6 @@
 # TorDetector
 
-Detect if IP is a TOR exit node.
+Detect if an IP is a TOR exit node.
 
 ## Installation
 
