@@ -1,8 +1,11 @@
 require 'ipaddr'
 require 'resolv'
+require 'timeout'
 
 module TorDetector
-  MalformedIP = Class.new(StandardError)
+  Error = Class.new(StandardError)
+  MalformedIP = Class.new(Error)
+  DNSTimeout  = Class.new(Error)
 
   # tor_detector = TorDetector::Base.new
   # tor_detector.call('1.2.3.4')
@@ -19,7 +22,11 @@ module TorDetector
 
     def call(ip)
       IPAddr.new(ip)
-      Resolv.getaddress(tor_hostname_for(ip)) == positive_tor_ip
+      Timeout::timeout(timeout) do
+        Resolv.getaddress(tor_hostname_for(ip)) == positive_tor_ip
+      end
+    rescue Timeout::Error
+      raise DNSTimeout
     rescue IPAddr::InvalidAddressError
       raise MalformedIP
     rescue Errno::EHOSTUNREACH, Errno::ENETUNREACH, Resolv::ResolvError
