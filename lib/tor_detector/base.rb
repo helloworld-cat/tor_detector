@@ -3,7 +3,7 @@ require 'resolv'
 require 'timeout'
 
 module TorDetector
-  Error = Class.new(StandardError)
+  Error       = Class.new(StandardError)
   MalformedIP = Class.new(Error)
   DNSTimeout  = Class.new(Error)
 
