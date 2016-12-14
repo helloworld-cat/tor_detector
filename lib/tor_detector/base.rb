@@ -8,11 +8,13 @@ module TorDetector
   # tor_detector.call('1.2.3.4')
   class Base
     attr_reader :dns_ip,
-                :dns_port
+                :dns_port,
+                :timeout
 
-    def initialize(dns_ip = '8.8.8.8', dns_port = 53)
+    def initialize(dns_ip = '8.8.8.8', dns_port = 53, timeout = 5)
       @dns_ip   = dns_ip
       @dns_port = dns_port
+      @timeout  = timeout
     end
 
     def call(ip)

@@ -5,9 +5,11 @@ describe TorDetector::Base do
   describe '#initialize' do
     let(:default_dns_ip) { '8.8.8.8' }
     let(:default_dns_port) { 53 }
+    let(:default_timeout) { 5 }
     subject { TorDetector::Base.new }
     it { expect(subject.dns_ip).to eq(default_dns_ip) }
     it { expect(subject.dns_port).to eq(default_dns_port) }
+    it { expect(subject.timeout ).to eq(default_timeout) }
   end
 
   describe '#call' do
