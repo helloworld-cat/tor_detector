@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pagedegeek/tor_detector.svg?branch=master)](https://travis-ci.org/pagedegeek/tor_detector)
+
 # TorDetector
 
 Detect if an IP is a TOR exit node.
