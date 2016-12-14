@@ -22,7 +22,7 @@ module TorDetector
 
     def call(ip)
       IPAddr.new(ip)
-      Timeout::timeout(timeout) do
+      Timeout.timeout(timeout) do
         Resolv.getaddress(tor_hostname_for(ip)) == positive_tor_ip
       end
     rescue Timeout::Error
