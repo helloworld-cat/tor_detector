@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Sam']
   spec.email         = ['samuel@pagedegeek.com']
 
-  spec.summary       = 'Detect if IP is exit node of TOR'
-  spec.description   = 'Detect if IP belongs to TOR'
+  spec.summary       = 'Detect if an IP is exit node of TOR'
+  spec.description   = 'Detect if an IP belongs to TOR'
   spec.homepage      = 'https://github.com/pagedegeek/tor_detector'
 
   if spec.respond_to?(:metadata)
